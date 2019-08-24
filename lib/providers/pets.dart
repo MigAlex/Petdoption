@@ -41,4 +41,9 @@ class Pets with ChangeNotifier {
   Pet findById(String id){
     return _items.firstWhere((prod) => prod.id == id);
   }
+  
+   List<Pet> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
 }

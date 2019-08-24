@@ -7,7 +7,7 @@ import '../providers/pet.dart';
 class PetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final pet = Provider.of<Pet>(context);
+    final pet = Provider.of<Pet>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -25,14 +25,16 @@ class PetItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              pet.isFavorite ? Icons.favorite : Icons.favorite_border,
-            ),
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              pet.toggleFavoriteStatus();
-            },
+          leading: Consumer<Pet>(
+            builder: (ctx, product, child) => IconButton(
+                  icon: Icon(
+                    product.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  ),
+                  color: Theme.of(context).accentColor,
+                  onPressed: () {
+                    product.toggleFavoriteStatus();
+                  },
+                ),
           ),
           title: Text(
             pet.name,

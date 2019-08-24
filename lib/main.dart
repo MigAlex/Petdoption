@@ -11,8 +11,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (ctx) => Pets(),
+    return ChangeNotifierProvider.value(
+      value: Pets(),
       child: MaterialApp(
         title: 'Pet Ads Board',
         theme: ThemeData(

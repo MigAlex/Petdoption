@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 //struktura jak wygląda Zwierzak
 
-class Pet{
+class Pet with ChangeNotifier{
   final String id;
   final String name;
   final String description;
@@ -19,4 +19,9 @@ class Pet{
     this.isFavorite = false,
 
   });
+
+  void toggleFavoriteStatus(){
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }
