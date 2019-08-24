@@ -13,10 +13,10 @@ class PetsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(5.0),
       itemCount: pets.length,
-      itemBuilder: (ctx, i) => PetItem(
-        pets[i].id,
-        pets[i].name,
-        pets[i].imageUrl,
+      itemBuilder: (ctx, i) => ChangeNotifierProvider(
+        builder: (c) => pets[i],
+        child: PetItem(
+      ),
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

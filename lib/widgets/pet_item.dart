@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/pet_detail_screen.dart';
+import '../providers/pet.dart';
 
 class PetItem extends StatelessWidget {
-  final String id;
-  final String name;
-  final String imageUrl;
-
-  PetItem(this.id, this.name, this.imageUrl);
-
   @override
   Widget build(BuildContext context) {
+    final pet = Provider.of<Pet>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -18,23 +15,27 @@ class PetItem extends StatelessWidget {
           onTap: () {
             Navigator.of(context).pushNamed(
               PetDetailScreen.routeName,
-              arguments: id,
+              arguments: pet.id,
             );
           },
           child: Image.network(
-            imageUrl,
+            pet.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: IconButton(
-            icon: Icon(Icons.favorite),
+            icon: Icon(
+              pet.isFavorite ? Icons.favorite : Icons.favorite_border,
+            ),
             color: Theme.of(context).accentColor,
-            onPressed: () {},
+            onPressed: () {
+              pet.toggleFavoriteStatus();
+            },
           ),
           title: Text(
-            name,
+            pet.name,
             textAlign: TextAlign.center,
           ),
           trailing: IconButton(

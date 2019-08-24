@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../models/pet.dart';
+import './pet.dart';
 
 class Pets with ChangeNotifier {
   List<Pet> _items = [
@@ -36,5 +36,9 @@ class Pets with ChangeNotifier {
   void addPet(){
     //_items.add();
     notifyListeners();
+  }
+
+  Pet findById(String id){
+    return _items.firstWhere((prod) => prod.id == id);
   }
 }
