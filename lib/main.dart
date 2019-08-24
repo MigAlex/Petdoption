@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import './screens/pets_overview_screen.dart';
+import './screens/pet_detail_screen.dart';
+import './providers/pets.dart';
+
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Petdoption screen'),
-          backgroundColor: Colors.deepPurple,
+    return ChangeNotifierProvider(
+      builder: (ctx) => Pets(),
+      child: MaterialApp(
+        title: 'Pet Ads Board',
+        theme: ThemeData(
+          primarySwatch: Colors.purple,
+          accentColor: Colors.lightGreen,
+          fontFamily: 'Lato',
         ),
-        body: Text('Demo Text'),
+        home: PetsOverviewScreen(),
+        routes: {
+          PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
+        },
       ),
     );
   }
