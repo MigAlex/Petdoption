@@ -25,6 +25,14 @@ class AdoptionCart with ChangeNotifier {
     return _items.length;
   }
 
+  double get totalAmount{
+    var total = 0.0;
+    _items.forEach((key, adoptionCartItem){
+      total += adoptionCartItem.price * adoptionCartItem.quantity;
+    });
+    return total;
+  }
+
   void addItem(
     String petId,
     double price,
@@ -53,4 +61,11 @@ class AdoptionCart with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeItem(String petId){
+    _items.remove(petId);
+    notifyListeners();
+  }
+
+
 }

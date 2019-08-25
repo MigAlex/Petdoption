@@ -18,6 +18,38 @@ class PetDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(loadedPet.name),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 400,
+              width: double.infinity,
+              child: Image.network(
+                loadedPet.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 11,),
+            Text(
+              '\$${loadedPet.price}',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 21,
+              ),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              width: double.infinity,
+              child: Text(
+                loadedPet.description,
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

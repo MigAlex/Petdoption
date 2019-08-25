@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../widgets/pets_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/adoption_cart.dart';
+import './adoption_cart_screen.dart';
 
 enum FilterOptions {
   Favorites,
@@ -56,7 +57,9 @@ class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
               icon: Icon(
                 Icons.pets,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AdoptionCartScreen.routeName);
+              },
             ),
           ),
         ],

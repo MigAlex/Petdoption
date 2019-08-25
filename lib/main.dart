@@ -5,6 +5,7 @@ import './screens/pets_overview_screen.dart';
 import './screens/pet_detail_screen.dart';
 import './providers/pets.dart';
 import './providers/adoption_cart.dart';
+import './screens/adoption_cart_screen.dart';
 
 
 void main() => runApp(MyApp());
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         home: PetsOverviewScreen(),
         routes: {
           PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
+          AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
         },
       ),
     );
