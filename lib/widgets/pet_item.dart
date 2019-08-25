@@ -3,11 +3,13 @@ import 'package:provider/provider.dart';
 
 import '../screens/pet_detail_screen.dart';
 import '../providers/pet.dart';
+import '../providers/adoption_cart.dart';
 
 class PetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pet = Provider.of<Pet>(context, listen: false);
+    final adoptionCart = Provider.of<AdoptionCart>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -44,7 +46,9 @@ class PetItem extends StatelessWidget {
             icon: Icon(
               Icons.pets,
             ),
-            onPressed: () {},
+            onPressed: () {
+              adoptionCart.addItem(pet.id, pet.price, pet.name);
+            },
             color: Theme.of(context).accentColor,
           ),
         ),

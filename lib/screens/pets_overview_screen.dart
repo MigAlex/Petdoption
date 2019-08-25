@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/pets_grid.dart';
+import '../widgets/badge.dart';
+import '../providers/adoption_cart.dart';
 
 enum FilterOptions {
   Favorites,
@@ -44,9 +47,21 @@ class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
                   ),
                 ],
           ),
+          Consumer<AdoptionCart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.pets,
+              ),
+              onPressed: () {},
+            ),
+          ),
         ],
       ),
-      body: new PetsGrid(_showOnlyFavorites),
+      body: PetsGrid(_showOnlyFavorites),
     );
   }
 }
