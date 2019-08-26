@@ -66,6 +66,9 @@ class AdoptionCart with ChangeNotifier {
     _items.remove(petId);
     notifyListeners();
   }
-
+  void clear(){
+    _items = {};
+    notifyListeners();
+  }
 
 }

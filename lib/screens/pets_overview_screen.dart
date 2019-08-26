@@ -5,6 +5,7 @@ import '../widgets/pets_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/adoption_cart.dart';
 import './adoption_cart_screen.dart';
+import '../widgets/app_drawer.dart';
 
 enum FilterOptions {
   Favorites,
@@ -64,6 +65,7 @@ class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
           ),
         ],
       ),
+      drawer: AppDrawer(),
       body: PetsGrid(_showOnlyFavorites),
     );
   }
