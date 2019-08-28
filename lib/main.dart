@@ -9,6 +9,7 @@ import './providers/adoption_cart.dart';
 import './providers/adoptions.dart';
 import './screens/adoptions_screen.dart';
 import './screens/user_pets_screen.dart';
+import './screens/edit_pet_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
           AdoptionsScreen.routeName: (ctx) => AdoptionsScreen(),
           UserPetsScreen.rounteName: (ctx) => UserPetsScreen(),
+          EditPetScreen.routeName: (ctx) => EditPetScreen(),
         },
       ),
     );

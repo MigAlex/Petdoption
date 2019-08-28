@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/pets.dart';
 import '../widgets/user_pet_item.dart';
 import '../widgets/app_drawer.dart';
+import './edit_pet_screen.dart';
 
 class UserPetsScreen extends StatelessWidget {
   static const rounteName = '/user-pets';
@@ -18,7 +19,7 @@ class UserPetsScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              //will add in future
+              Navigator.of(context).pushNamed(EditPetScreen.routeName);
             },
           )
         ],

@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-//struktura jak wygląda Zwierzak
-
 class Pet with ChangeNotifier{
   final String id;
   final String name;
