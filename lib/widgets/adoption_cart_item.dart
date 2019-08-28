@@ -37,7 +37,7 @@ class AdoptionCartItem extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
-      confirmDismiss: (direction) {
+      confirmDismiss: (direction) {           //Alert dialog podczas usuwania peta z listy
         return showDialog(
           context: context,
           builder: (ctx) => AlertDialog(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../screens/adoptions_screen.dart';
+import '../screens/user_pets_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Welcome!'),
             automaticallyImplyLeading: false,
           ),
-          Divider(),
+          Divider(),                        //po kolei każda opcja w appbarze, tu powrot do listy petow
           ListTile(
             leading: Icon(Icons.shop),
             title: Text('Pet List View'),
@@ -20,12 +21,20 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/');
             },
           ),
-          Divider(),
+          Divider(),                      //przejscie do ekranu historii
           ListTile(
             leading: Icon(Icons.payment),
             title: Text('Adoptions history'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(AdoptionsScreen.routeName);
+            },
+          ),
+          Divider(),          //przejscie do ekranu dodawania/edycji Twoich ogloszen
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('Manage Your Pet annoucements'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(UserPetsScreen.rounteName);
             },
           )
         ],
