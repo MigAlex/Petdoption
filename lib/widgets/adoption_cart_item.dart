@@ -37,6 +37,31 @@ class AdoptionCartItem extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: Text('Are you sure?'),
+                content: Text(
+                  'Do you want to remove this Pet from the cart?',
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Nope'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop(false);
+                    },
+                  ),
+                  FlatButton(
+                    child: Text('Yes'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop(true);
+                    },
+                  ),
+                ],
+              ),
+        );
+      },
       onDismissed: (direction) {
         Provider.of<AdoptionCart>(context, listen: false).removeItem(productId);
       },
