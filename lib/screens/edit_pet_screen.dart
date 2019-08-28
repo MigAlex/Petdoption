@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/pet.dart';
+import '../providers/pets.dart';
 
 class EditPetScreen extends StatefulWidget {
   static const routeName = '/edit-pet';
@@ -25,10 +27,40 @@ class _EditPetScreenState extends State<EditPetScreen> {
     imageUrl: '',
   );
 
+  var _initValues = {
+    'name': '',
+    'price': '',
+    'description': '',
+    'email': '',
+    'imageUrl': '',
+  };
+  var _isInit = true;
+
   @override
   void initState() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final petId = ModalRoute.of(context).settings.arguments as String;
+      if (petId != null) {
+        _editedPet =
+            Provider.of<Pets>(context, listen: false).findById(petId);
+        _initValues = {
+          'name': _editedPet.name,
+          'price': _editedPet.price.toString(),
+          'description': _editedPet.description,
+          'email': _editedPet.email,
+          'imageUrl': '',
+        };
+        _imageUrlController.text = _editedPet.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
@@ -62,11 +94,13 @@ class _EditPetScreenState extends State<EditPetScreen> {
       return;
     }
     _form.currentState.save();
-    print(_editedPet.name);
-    print(_editedPet.description);
-    print(_editedPet.price);
-    print(_editedPet.email);
-    print(_editedPet.imageUrl);
+    if (_editedPet.id != null) {
+      Provider.of<Pets>(context, listen: false)
+          .updatePet(_editedPet.id, _editedPet);
+    } else {
+      Provider.of<Pets>(context, listen: false).addPet(_editedPet);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -88,6 +122,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _initValues['name'],
                 decoration: InputDecoration(labelText: 'Name'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
@@ -106,11 +141,13 @@ class _EditPetScreenState extends State<EditPetScreen> {
                     description: _editedPet.description,
                     email: _editedPet.email,
                     imageUrl: _editedPet.imageUrl,
-                    id: null,
+                    id: _editedPet.id,
+                    isFavorite: _editedPet.isFavorite,
                   );
                 },
               ),
               TextFormField(
+                initialValue: _initValues['price'],
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -132,16 +169,17 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 },
                 onSaved: (value) {
                   _editedPet = Pet(
-                    name: _editedPet.name,
-                    price: double.parse(value),
-                    description: _editedPet.description,
-                    email: _editedPet.email,
-                    imageUrl: _editedPet.imageUrl,
-                    id: null,
-                  );
+                      name: _editedPet.name,
+                      price: double.parse(value),
+                      description: _editedPet.description,
+                      email: _editedPet.email,
+                      imageUrl: _editedPet.imageUrl,
+                      id: _editedPet.id,
+                      isFavorite: _editedPet.isFavorite);
                 },
               ),
               TextFormField(
+                initialValue: _initValues['description'],
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -162,11 +200,13 @@ class _EditPetScreenState extends State<EditPetScreen> {
                     description: value,
                     email: _editedPet.email,
                     imageUrl: _editedPet.imageUrl,
-                    id: null,
+                    id: _editedPet.id,
+                    isFavorite: _editedPet.isFavorite,
                   );
                 },
               ),
               TextFormField(
+                initialValue: _initValues['email'],
                 decoration: InputDecoration(labelText: 'Email'),
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -185,7 +225,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
                     description: _editedPet.description,
                     email: value,
                     imageUrl: _editedPet.imageUrl,
-                    id: null,
+                    id: _editedPet.id,
+                    isFavorite: _editedPet.isFavorite,
                   );
                 },
               ),
@@ -246,7 +287,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
                           description: _editedPet.description,
                           email: _editedPet.email,
                           imageUrl: value,
-                          id: null,
+                          id: _editedPet.id,
+                          isFavorite: _editedPet.isFavorite,
                         );
                       },
                     ),

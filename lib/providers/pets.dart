@@ -35,18 +35,44 @@ class Pets with ChangeNotifier {
   List<Pet> get items{
     return [..._items];
   }
-
-  void addPet(){
-    //_items.add();
-    notifyListeners();
+  
+  List<Pet> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
   Pet findById(String id){
     return _items.firstWhere((prod) => prod.id == id);
   }
-  
-   List<Pet> get favoriteItems {
-    return _items.where((prodItem) => prodItem.isFavorite).toList();
+
+  void addPet(Pet pet) {
+    final newPet = Pet(
+      name: pet.name,
+      description: pet.description,
+      price: pet.price,
+      email: pet.email,
+      imageUrl: pet.imageUrl,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newPet);
+    notifyListeners();
   }
+
+  void updatePet(String id, Pet newPet) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    if (prodIndex >= 0) {
+      _items[prodIndex] = newPet;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
+
+  void deletePet(String id) {
+    _items.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
+
+  
+
 
 }

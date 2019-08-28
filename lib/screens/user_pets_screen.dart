@@ -32,6 +32,7 @@ class UserPetsScreen extends StatelessWidget {
           itemBuilder: (_, i) => Column(
             children: [
               UserPetItem(
+                petsData.items[i].id,
                 petsData.items[i].name,
                 petsData.items[i].imageUrl,
               ),
