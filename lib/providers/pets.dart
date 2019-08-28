@@ -8,6 +8,7 @@ class Pets with ChangeNotifier {
       name: 'Pimpek',
       description: 'Some funny dog',
       price: 0.00,
+      email: 'elo@gmail.com',
       imageUrl: 
         'https://st4.depositphotos.com/16122460/21283/i/1600/depositphotos_212838026-stock-photo-funny-dog-big-eyes-white.jpg',
     ),
@@ -16,6 +17,7 @@ class Pets with ChangeNotifier {
       name: 'Filemon',
       description: 'Lazy Cat at all',
       price: 0.00,
+      email: 'elo@gmail.com',
       imageUrl:
         'https://image.shutterstock.com/image-photo/lazy-cat-full-asleep-on-260nw-396693610.jpg',
     ),
@@ -24,6 +26,7 @@ class Pets with ChangeNotifier {
       name: 'Niszczyciel',
       description: 'Royal Dog, excellent for active people',
       price: 350.00,
+      email: 'elo@gmail.com',
       imageUrl:
         'https://media.istockphoto.com/photos/siberien-husky-dog-in-studio-picture-id516205222?k=6&m=516205222&s=612x612&w=0&h=F7W4GpEYZa0yQTi0u2scDKv6qakA0NbY3ZvMoqYIGAM=',
     ),

@@ -25,9 +25,9 @@ class AdoptionCart with ChangeNotifier {
     return _items.length;
   }
 
-  double get totalAmount{
+  double get totalAmount {
     var total = 0.0;
-    _items.forEach((key, adoptionCartItem){
+    _items.forEach((key, adoptionCartItem) {
       total += adoptionCartItem.price * adoptionCartItem.quantity;
     });
     return total;
@@ -62,13 +62,32 @@ class AdoptionCart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String petId){
+  void removeItem(String petId) {
     _items.remove(petId);
     notifyListeners();
   }
-  void clear(){
-    _items = {};
+
+  void removeSingleItem(String petId) {
+    if (!_items.containsKey(petId)) {
+      return;
+    }
+    if (_items[petId].quantity > 1) {
+      _items.update(
+          petId,
+          (existingAdoptionCartItem) => AdoptionCartItem(
+                id: existingAdoptionCartItem.id,
+                name: existingAdoptionCartItem.name,
+                price: existingAdoptionCartItem.price,
+                quantity: existingAdoptionCartItem.quantity - 1,
+              ));
+    } else {
+      _items.remove(petId);
+    }
     notifyListeners();
   }
 
+  void clear() {
+    _items = {};
+    notifyListeners();
+  }
 }

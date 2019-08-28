@@ -48,6 +48,22 @@ class PetItem extends StatelessWidget {
             ),
             onPressed: () {
               adoptionCart.addItem(pet.id, pet.price, pet.name);
+              Scaffold.of(context).hideCurrentSnackBar();
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'You have already added pet to adoption cart',
+                  ),
+                  duration: Duration(seconds: 3),
+                  action: SnackBarAction(
+                    label: 'UNDO',
+                    onPressed: (){
+                      adoptionCart.removeSingleItem(pet.id);
+                    },
+                  ),
+                ),
+
+              );
             },
             color: Theme.of(context).accentColor,
           ),

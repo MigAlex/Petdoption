@@ -7,6 +7,7 @@ class Pet with ChangeNotifier{
   final String name;
   final String description;
   final double price;
+  final String email;
   final String imageUrl;
   bool isFavorite;
 
@@ -15,6 +16,7 @@ class Pet with ChangeNotifier{
     @required this.name,
     @required this.description,
     @required this.price,
+    @required this.email,
     @required this.imageUrl,
     this.isFavorite = false,
 

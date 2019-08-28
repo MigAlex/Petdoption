@@ -24,9 +24,9 @@ class PetsGrid extends StatelessWidget {
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        childAspectRatio: 1.75 / 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
       ),
     );
   }
