@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import './pet.dart';
+import 'dart:convert';              //dla konwertowania danych do json (json.encode)
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Pets with ChangeNotifier {
   List<Pet> _items = [
@@ -44,17 +48,32 @@ class Pets with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addPet(Pet pet) {
-    final newPet = Pet(
-      name: pet.name,
-      description: pet.description,
-      price: pet.price,
-      email: pet.email,
-      imageUrl: pet.imageUrl,
-      id: DateTime.now().toString(),
-    );
-    _items.add(newPet);
-    notifyListeners();
+  Future<void> addPet(Pet pet) {
+    const url ='https://petdoption-app.firebaseio.com/pets.json';
+       return http
+        .post(                  //wysyla post request dla url z powyzej
+      url,
+      body: json.encode({
+        'name': pet.name,
+        'description': pet.description,
+        'price': pet.price,
+        'email': pet.email,
+        'imageUrl': pet.imageUrl,
+        'isFavorite': pet.isFavorite,
+      }),
+        )
+        .then((response) {
+      final newPet = Pet(
+        name: pet.name,
+        description: pet.description,
+        price: pet.price,
+        email: pet.email,
+        imageUrl: pet.imageUrl,
+        id: json.decode(response.body)['name'],
+      );
+      _items.add(newPet);
+      notifyListeners();
+    });
   }
 
   void updatePet(String id, Pet newPet) {

@@ -35,6 +35,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
     'imageUrl': '',
   };
   var _isInit = true;
+  var _isLoading = false; //dla wskaznika ladowania
 
   @override
   void initState() {
@@ -47,8 +48,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
     if (_isInit) {
       final petId = ModalRoute.of(context).settings.arguments as String;
       if (petId != null) {
-        _editedPet =
-            Provider.of<Pets>(context, listen: false).findById(petId);
+        _editedPet = Provider.of<Pets>(context, listen: false).findById(petId);
         _initValues = {
           'name': _editedPet.name,
           'price': _editedPet.price.toString(),
@@ -89,18 +89,29 @@ class _EditPetScreenState extends State<EditPetScreen> {
 
   void _saveForm() {
     final isValid = _form.currentState.validate();
-
-    if(!isValid){
+    if (!isValid) {
       return;
     }
     _form.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+
     if (_editedPet.id != null) {
       Provider.of<Pets>(context, listen: false)
           .updatePet(_editedPet.id, _editedPet);
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
     } else {
-      Provider.of<Pets>(context, listen: false).addPet(_editedPet);
+      Provider.of<Pets>(context, listen: false).addPet(_editedPet).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.of(context).pop();
+      });
     }
-    Navigator.of(context).pop();
   }
 
   @override
@@ -115,7 +126,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
           ),
         ],
       ),
-      body: Padding(
+      body: _isLoading ? Center(child: CircularProgressIndicator(),) : Padding(   //jesli prawda jest ze mamy ladowanie, to wyskoczy Circular (czyli wskaznik ladowania), jesli nie to normalnie pojawi sie ekran
         padding: const EdgeInsets.all(14.0),
         child: Form(
           key: _form,
@@ -213,12 +224,12 @@ class _EditPetScreenState extends State<EditPetScreen> {
                   if (value.isEmpty) {
                     return 'Please add proper data';
                   }
-                  if(!value.contains('@')){
+                  if (!value.contains('@')) {
                     return 'Your email address should contain @ sign';
                   }
                   return null;
                 },
-                onSaved: (value){
+                onSaved: (value) {
                   _editedPet = Pet(
                     name: _editedPet.name,
                     price: _editedPet.price,
@@ -265,7 +276,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       onFieldSubmitted: (_) {
                         _saveForm();
                       },
-                       validator: (value) {
+                      validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter an image URL.';
                         }
