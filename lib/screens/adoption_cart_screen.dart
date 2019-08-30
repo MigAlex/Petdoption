@@ -10,7 +10,7 @@ class AdoptionCartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<AdoptionCart>(context);
+    final adoptionCart = Provider.of<AdoptionCart>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Pet Cart'),
@@ -31,24 +31,14 @@ class AdoptionCartScreen extends StatelessWidget {
                   Spacer(),
                   Chip(
                     label: Text(
-                      '\$${cart.totalAmount.toStringAsFixed(2)}',
+                      '\$${adoptionCart.totalAmount.toStringAsFixed(2)}',
                       style: TextStyle(
                         color: Theme.of(context).primaryTextTheme.title.color,
                       ),
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  FlatButton(
-                    child: Text('Adopt it now!'),
-                    onPressed: () {
-                      Provider.of<Adoptions>(context, listen: false).addAdoption(
-                        cart.items.values.toList(),
-                        cart.totalAmount,
-                      );
-                      cart.clear();
-                    },
-                    textColor: Theme.of(context).primaryColor,
-                  )
+                 AdoptionButton(adoptionCart: adoptionCart)
                 ],
               ),
             ),
@@ -56,18 +46,55 @@ class AdoptionCartScreen extends StatelessWidget {
           SizedBox(height: 12),
           Expanded(
             child: ListView.builder(
-              itemCount: cart.items.length,
+              itemCount: adoptionCart.items.length,
               itemBuilder: (ctx, i) => AdoptionCartItem(
-                cart.items.values.toList()[i].id,
-                cart.items.keys.toList()[i],
-                cart.items.values.toList()[i].price,
-                cart.items.values.toList()[i].quantity,
-                cart.items.values.toList()[i].name,
+                adoptionCart.items.values.toList()[i].id,
+                adoptionCart.items.keys.toList()[i],
+                adoptionCart.items.values.toList()[i].price,
+                adoptionCart.items.values.toList()[i].quantity,
+                adoptionCart.items.values.toList()[i].name,
               ),
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class AdoptionButton extends StatefulWidget {     //adoptionbutton bedzie uzywany tylko w powyzszym widgecie, wiec nie ma co go przenosic do osobnego pliku
+  const AdoptionButton({
+    Key key,
+    @required this.adoptionCart,
+  }) : super(key: key);
+
+  final AdoptionCart adoptionCart;
+
+  @override
+  _AdoptionButtonState createState() => _AdoptionButtonState();
+}
+
+class _AdoptionButtonState extends State<AdoptionButton> {
+  var _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: _isLoading ? CircularProgressIndicator() : Text('Adopt it!'),
+      onPressed: (widget.adoptionCart.totalAmount <= 0 || _isLoading) ? null : () async {
+        setState(() {
+         _isLoading = true; 
+        });
+        await Provider.of<Adoptions>(context, listen: false).addAdoption(
+          widget.adoptionCart.items.values.toList(),
+          widget.adoptionCart.totalAmount,
+          );
+          setState(() {
+           _isLoading = false; 
+          });
+          widget.adoptionCart.clear();
+      },
+      textColor: Theme.of(context).primaryColor,    
     );
   }
 }
