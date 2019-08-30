@@ -98,12 +98,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
     });
 
     if (_editedPet.id != null) {
-      Provider.of<Pets>(context, listen: false)
+      await Provider.of<Pets>(context, listen: false)
           .updatePet(_editedPet.id, _editedPet);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Pets>(context, listen: false).addPet(_editedPet);
@@ -123,13 +119,12 @@ class _EditPetScreenState extends State<EditPetScreen> {
             ],
           ),
         );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
     }
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.of(context).pop();
   }
 
   @override

@@ -4,6 +4,7 @@ import 'dart:convert';              //dla konwertowania danych do json (json.enc
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../models/http_exception.dart';
 
 class Pets with ChangeNotifier {
   List<Pet> _items = [
@@ -103,9 +104,20 @@ class Pets with ChangeNotifier {
 
   }
 
-  void updatePet(String id, Pet newPet) {
+  Future <void> updatePet(String id, Pet newPet) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
+      final url ='https://petdoption-app.firebaseio.com/pets/$id.json';   //chcemy edytowac peta o szczegolnym id dlatego to $id
+     //patch request przekaze Firebase ze nalezy to merge dane ktore nadejda w tym updacie do istniejacych juz danych
+     await http.patch(url,
+     body: json.encode({
+       'name': newPet.name,
+       'description': newPet.description,
+       'price': newPet.price,
+       'email': newPet.email,
+       'imageUrl': newPet.imageUrl,
+     }));
+     
       _items[prodIndex] = newPet;
       notifyListeners();
     } else {
@@ -113,9 +125,20 @@ class Pets with ChangeNotifier {
     }
   }
 
-  void deletePet(String id) {
-    _items.removeWhere((prod) => prod.id == id);
+  Future <void> deletePet(String id) async{
+    final url ='https://petdoption-app.firebaseio.com/pets/$id.json';
+    final existingPetIndex = _items.indexWhere((pt) => pt.id == id);
+    var existingPet = _items[existingPetIndex];
+    _items.removeAt(existingPetIndex);                  //kasuje z listy, ale nie z pamieci
     notifyListeners();
+
+    final response = await http.delete(url);
+    if (response.statusCode >= 400){
+      _items.insert(existingPetIndex, existingPet);
+      notifyListeners();
+      throw HttpException('Unable to delete pet!');
+    }
+    existingPet = null;
   }
 
 }
