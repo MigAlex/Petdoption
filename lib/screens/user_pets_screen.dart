@@ -9,6 +9,10 @@ import './edit_pet_screen.dart';
 class UserPetsScreen extends StatelessWidget {
   static const rounteName = '/user-pets';
 
+  Future<void> _refreshPets(BuildContext context) async {
+    await Provider.of<Pets>(context).fetchAndSetPets();
+  }
+
   @override
   Widget build(BuildContext context) {
     final petsData = Provider.of<Pets>(context);
@@ -25,19 +29,22 @@ class UserPetsScreen extends StatelessWidget {
         ],
       ),
       drawer: AppDrawer(),
-      body: Padding(
-        padding: EdgeInsets.all(9),
-        child: ListView.builder(
-          itemCount: petsData.items.length,
-          itemBuilder: (_, i) => Column(
-            children: [
-              UserPetItem(
-                petsData.items[i].id,
-                petsData.items[i].name,
-                petsData.items[i].imageUrl,
-              ),
-              Divider(),
-            ],
+      body: RefreshIndicator(       //widget dzieki ktoremu po przeciagnieciu w dol w 'Your Pets Annoucements' odswiezy nam sie lista Petow
+        onRefresh: () => _refreshPets(context),
+        child: Padding(
+          padding: EdgeInsets.all(9),
+          child: ListView.builder(
+            itemCount: petsData.items.length,
+            itemBuilder: (_, i) => Column(
+              children: [
+                UserPetItem(
+                  petsData.items[i].id,
+                  petsData.items[i].name,
+                  petsData.items[i].imageUrl,
+                ),
+                Divider(),
+              ],
+            ),
           ),
         ),
       ),

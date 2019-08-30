@@ -6,11 +6,13 @@ import '../widgets/badge.dart';
 import '../providers/adoption_cart.dart';
 import './adoption_cart_screen.dart';
 import '../widgets/app_drawer.dart';
+import '../providers/pets.dart';
 
 enum FilterOptions {
   Favorites,
   All,
 }
+
 class PetsOverviewScreen extends StatefulWidget {
   @override
   _PetsOverviewScreenState createState() => _PetsOverviewScreenState();
@@ -18,6 +20,29 @@ class PetsOverviewScreen extends StatefulWidget {
 
 class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {      //uruchamia się raz, gdy laduje dane
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {    //ta metoda odpali sie po pelnym odpaleniu tego calego widgeta
+    if (_isInit) {              //odpala się tylko raz, gdy ekran się naładował
+      setState(() {
+        _isLoading = true;      //loading spinner podczas ladowania listy Petow
+      });
+      Provider.of<Pets>(context).fetchAndSetPets().then((_) {
+        setState(() {
+          _isLoading = false;     //fetching pets sie skonczylo
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +64,15 @@ class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
               Icons.more_vert,
             ),
             itemBuilder: (_) => [
-                  PopupMenuItem(
-                    child: Text('Only Favorites'),
-                    value: FilterOptions.Favorites,
-                  ),
-                  PopupMenuItem(
-                    child: Text('Show All'),
-                    value: FilterOptions.All,
-                  ),
-                ],
+              PopupMenuItem(
+                child: Text('Only Favorites'),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text('Show All'),
+                value: FilterOptions.All,
+              ),
+            ],
           ),
           Consumer<AdoptionCart>(
             builder: (_, cart, ch) => Badge(
@@ -66,7 +91,11 @@ class _PetsOverviewScreenState extends State<PetsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: PetsGrid(_showOnlyFavorites),
+      body: _isLoading        //jesli sie laduje
+          ? Center(
+              child: CircularProgressIndicator(),   //pokaz loading spinner
+            )
+          : PetsGrid(_showOnlyFavorites),   //jak juz nie, pokaz liste petow.
     );
   }
 }
