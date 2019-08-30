@@ -48,9 +48,10 @@ class Pets with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  Future<void> addPet(Pet pet) {
+  Future<void> addPet(Pet pet) async {
     const url ='https://petdoption-app.firebaseio.com/pets.json';
-       return http
+    try{
+       final response = await http
         .post(                  //wysyla post request dla url z powyzej
       url,
       body: json.encode({
@@ -61,8 +62,7 @@ class Pets with ChangeNotifier {
         'imageUrl': pet.imageUrl,
         'isFavorite': pet.isFavorite,
       }),
-        )
-        .then((response) {
+    );
       final newPet = Pet(
         name: pet.name,
         description: pet.description,
@@ -73,7 +73,11 @@ class Pets with ChangeNotifier {
       );
       _items.add(newPet);
       notifyListeners();
-    });
+    } catch (error){
+      print(error);
+      throw error;
+    }
+
   }
 
   void updatePet(String id, Pet newPet) {
@@ -90,8 +94,5 @@ class Pets with ChangeNotifier {
     _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
   }
-
-  
-
 
 }
