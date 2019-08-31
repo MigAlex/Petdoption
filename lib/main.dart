@@ -10,6 +10,7 @@ import './providers/adoptions.dart';
 import './screens/adoptions_screen.dart';
 import './screens/user_pets_screen.dart';
 import './screens/edit_pet_screen.dart';
+import './screens/auth-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.lightGreen,
           fontFamily: 'Lato',
         ),
-        home: PetsOverviewScreen(),
+        home: AuthScreen(),
         routes: {
           PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
           AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
