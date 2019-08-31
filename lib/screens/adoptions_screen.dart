@@ -26,7 +26,7 @@ class AdoptionsScreen extends StatelessWidget{
               return Center(child: Text('There is any error!'),
               );
             } else {
-              return Consumer<Adoptions> (
+              return Consumer<Adoptions> (    //gdy nie ma bledow chcemy zwrocic ListView Adopcji, gdyz mamy zrobiony fetching
                 builder: (ctx, adoptionData, child) => ListView.builder(
                   itemCount: adoptionData.adoptions.length,
                   itemBuilder: (ctx, i) => AdoptionItem(adoptionData.adoptions[i]),
