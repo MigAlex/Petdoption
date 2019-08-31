@@ -1,9 +1,9 @@
-import 'dart:math';       //by skorzystac z liczby Pi
+import 'dart:math'; //by skorzystac z liczby Pi
 
 import 'package:flutter/material.dart';
 
-enum AuthMode {
-   Signup, Login 
+enum AuthMode { Signup, 
+Login
 }
 
 class AuthScreen extends StatelessWidget {
@@ -14,7 +14,8 @@ class AuthScreen extends StatelessWidget {
     final deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Stack(            //layotowy widget pozwalajacy na polozenie itemow w przestrzeni 3D
+      body: Stack(
+        //layotowy widget pozwalajacy na polozenie itemow w przestrzeni 3D
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
@@ -40,29 +41,38 @@ class AuthScreen extends StatelessWidget {
                   Flexible(
                     child: Container(
                       margin: EdgeInsets.only(bottom: 9.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12.0, horizontal: 84.0),
-                      transform: Matrix4.rotationZ(-9 * pi / 180)       //w jaki sposob Container jest pokazany
-                        ..translate(-8.0),             //w rzucie XYZ tutaj jest rotacja Z   //translate wywoływany jest na tym obiekcie, ale przez te .. nie wywołuje tego co translate powinno, a to co jest w Matrix4.rotationZ 
+                      padding: EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 44.0),
+                      transform: Matrix4.rotationZ(
+                          -9 * pi / 180) //w jaki sposob Container jest pokazany
+                        ..translate(
+                            -8.0), //w rzucie XYZ tutaj jest rotacja Z   //translate wywoływany jest na tym obiekcie, ale przez te .. nie wywołuje tego co translate powinno, a to co jest w Matrix4.rotationZ
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
-                        color: Colors.red.shade900,
+                        color: Colors.blue.shade900,
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 8,
                             color: Colors.black26,
                             offset: Offset(0, 2),
-                          )
+                          ),
                         ],
                       ),
-                      child: Text(
-                        'Petdoption',
-                        style: TextStyle(
-                          color: Theme.of(context).accentTextTheme.title.color,
-                          fontSize: 28,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
+                      child: FlatButton.icon(
+                        label: Text(
+                          'Petdoption',
+                          style: TextStyle(
+                            color: Colors.white60,
+                            fontSize: 28,
+                            fontFamily: 'Anton',
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
+                        icon: Icon(
+                          Icons.pets,
+                          color: Colors.black38,
+                        ),
+                        onPressed: () {},
                       ),
                     ),
                   ),
@@ -80,7 +90,8 @@ class AuthScreen extends StatelessWidget {
   }
 }
 
-class AuthCard extends StatefulWidget {       //widget od formularza autoryzacji
+class AuthCard extends StatefulWidget {
+  //widget od formularza autoryzacji
   const AuthCard({
     Key key,
   }) : super(key: key);
@@ -100,7 +111,7 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
 
   void _submit() {
-    if (!_formKey.currentState.validate()) { 
+    if (!_formKey.currentState.validate()) {
       // Invalid!
       return;
     }
@@ -118,7 +129,8 @@ class _AuthCardState extends State<AuthCard> {
     });
   }
 
-  void _switchAuthMode() {      //pozwala na zmiane ekranow z logowania na rejestracje
+  void _switchAuthMode() {
+    //pozwala na zmiane ekranow z logowania na rejestracje
     if (_authMode == AuthMode.Login) {
       setState(() {
         _authMode = AuthMode.Signup;
@@ -134,6 +146,7 @@ class _AuthCardState extends State<AuthCard> {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
+      color: Colors.white70,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -198,11 +211,11 @@ class _AuthCardState extends State<AuthCard> {
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.0, vertical: 7.0),
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.purple[200],
                     textColor: Theme.of(context).primaryTextTheme.button.color,
                   ),
                 FlatButton(

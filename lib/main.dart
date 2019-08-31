@@ -10,7 +10,7 @@ import './providers/adoptions.dart';
 import './screens/adoptions_screen.dart';
 import './screens/user_pets_screen.dart';
 import './screens/edit_pet_screen.dart';
-import './screens/auth-screen.dart';
+import './screens/auth_screen.dart';
 
 void main() => runApp(MyApp());
 
