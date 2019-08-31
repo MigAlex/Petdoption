@@ -5,45 +5,37 @@ import '../providers/adoptions.dart' show Adoptions;
 import '../widgets/adoption_item.dart';
 import '../widgets/app_drawer.dart';
 
-class AdoptionsScreen extends StatefulWidget {  //zamiana na stateful gdyz wtedy mamy initState wraz z future.delayed
+class AdoptionsScreen extends StatelessWidget{
   static const routeName = '/adoptions';
-  @override
-  _AdoptionsScreenState createState() => _AdoptionsScreenState();
-}
-
-class _AdoptionsScreenState extends State<AdoptionsScreen> {
-  var _isLoading = false;
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero).then((_) async {
-      setState(() {
-        _isLoading = true;
-      });
-      await Provider.of<Adoptions>(context, listen: false)
-          .fetchAndSetAdoptions();
-      setState(() {
-        _isLoading = false;
-      });
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final adoptionData = Provider.of<Adoptions>(context);
-
+    print('building adoptions');
     return Scaffold(
       appBar: AppBar(
         title: Text('Your adoption history'),
       ),
       drawer: AppDrawer(),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: adoptionData.adoptions.length,
-              itemBuilder: (ctx, i) => AdoptionItem(adoptionData.adoptions[i]),
-            ),
+      body: FutureBuilder(
+        future: Provider.of<Adoptions>(context, listen: false).fetchAndSetAdoptions(),
+        builder: (ctx, dataSnapshot){
+          if(dataSnapshot.connectionState == ConnectionState.waiting){
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if(dataSnapshot.error != null){
+              return Center(child: Text('There is any error!'),
+              );
+            } else {
+              return Consumer<Adoptions> (
+                builder: (ctx, adoptionData, child) => ListView.builder(
+                  itemCount: adoptionData.adoptions.length,
+                  itemBuilder: (ctx, i) => AdoptionItem(adoptionData.adoptions[i]),
+                ),
+              );
+            }
+          }
+        },
+      ),
     );
   }
 }
