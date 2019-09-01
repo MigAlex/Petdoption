@@ -7,11 +7,11 @@ import './screens/adoption_cart_screen.dart';
 import './providers/pets.dart';
 import './providers/adoption_cart.dart';
 import './providers/adoptions.dart';
+import './providers/auth.dart';
 import './screens/adoptions_screen.dart';
 import './screens/user_pets_screen.dart';
 import './screens/edit_pet_screen.dart';
 import './screens/auth_screen.dart';
-import './providers/auth.dart';
 
 void main() => runApp(MyApp());
 
