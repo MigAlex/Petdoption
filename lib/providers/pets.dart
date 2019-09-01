@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import './pet.dart';
-import 'dart:convert';              //dla konwertowania danych do json (json.encode)
+import 'dart:convert';        //dla konwertowania danych do json (json.encode)
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../models/http_exception.dart';
+import './pet.dart';
 
 class Pets with ChangeNotifier {
   List<Pet> _items = [
@@ -46,13 +46,16 @@ class Pets with ChangeNotifier {
   }
 
   Pet findById(String id){
-    return _items.firstWhere((prod) => prod.id == id);
+    return _items.firstWhere((prodItem) => prodItem.id == id);
   }
   Future<void> fetchAndSetPets() async{
     const url ='https://petdoption-app.firebaseio.com/pets.json';
     try{
       final response = await http.get(url);
-      final unpackedData = json.decode(response.body) as Map<String, dynamic>;      
+      final unpackedData = json.decode(response.body) as Map<String, dynamic>;
+      if(unpackedData == null){
+        return;
+      }      
       final List<Pet> loadedPets = [];
       unpackedData.forEach((ptId, ptData){        //bedzie sie wykonywala petla forEach dla kazdej danej i Peta
         loadedPets.add(Pet(
@@ -75,8 +78,7 @@ class Pets with ChangeNotifier {
   Future<void> addPet(Pet pet) async {
     const url ='https://petdoption-app.firebaseio.com/pets.json';
     try{
-       final response = await http
-        .post(                  //wysyla post request dla url z powyzej
+       final response = await http.post(                  //wysyla post request dla url z powyzej
       url,
       body: json.encode({
         'name': pet.name,
@@ -103,12 +105,12 @@ class Pets with ChangeNotifier {
     }
 
   }
-
+//chcemy edytowac peta o szczegolnym id dlatego to $id
+//patch request przekaze Firebase ze nalezy to merge dane ktore nadejda w tym updacie do istniejacych juz danych
   Future <void> updatePet(String id, Pet newPet) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url ='https://petdoption-app.firebaseio.com/pets/$id.json';   //chcemy edytowac peta o szczegolnym id dlatego to $id
-     //patch request przekaze Firebase ze nalezy to merge dane ktore nadejda w tym updacie do istniejacych juz danych
+      final url ='https://petdoption-app.firebaseio.com/pets/$id.json';   
      await http.patch(url,
      body: json.encode({
        'name': newPet.name,
@@ -125,7 +127,7 @@ class Pets with ChangeNotifier {
     }
   }
 
-  Future <void> deletePet(String id) async{
+  Future <void> deletePet(String id) async {
     final url ='https://petdoption-app.firebaseio.com/pets/$id.json';
     final existingPetIndex = _items.indexWhere((pt) => pt.id == id);
     var existingPet = _items[existingPetIndex];

@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'dart:convert'; 
 
-import 'dart:convert';          //dla json.encode
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-class Pet with ChangeNotifier{
+class Pet with ChangeNotifier {
   final String id;
   final String name;
   final String description;
@@ -20,29 +20,30 @@ class Pet with ChangeNotifier{
     @required this.email,
     @required this.imageUrl,
     this.isFavorite = false,
-
   });
 
+  void _setFavoriteValue(bool newValue){
+    isFavorite = newValue;
+    notifyListeners();
+  }
+
   Future<void> toggleFavoriteStatus() async{
-    final previousStatus = isFavorite;
+    final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
     final url ='https://petdoption-app.firebaseio.com/pets/$id.json';
     try {
       final response = await http.patch(
         url,
-        body: json.encode({'isFavorite': isFavorite,}),
+        body: json.encode({
+          'isFavorite': isFavorite,
+        }),
       );
-      if(response.statusCode >= 400){
-        _setFavoriteValue(previousStatus);
+      if (response.statusCode >= 400) {
+        _setFavoriteValue(oldStatus);
       }
-    } catch (error){
-      _setFavoriteValue(previousStatus);
+    } catch (error) {
+      _setFavoriteValue(oldStatus);
     }
-  }
-
-  void _setFavoriteValue(bool newValue){
-    isFavorite = newValue;
-    notifyListeners();
   }
 }

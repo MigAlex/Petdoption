@@ -122,6 +122,10 @@ class _AuthCardState extends State<AuthCard> {
     });
     if (_authMode == AuthMode.Login) {
       // Log user in
+      await Provider.of<Auth>(context, listen: false).login(
+        _authData['email'],
+        _authData['password'],
+      );
     } else {
       // Sign user up
       await Provider.of<Auth>(context, listen: false).signup(
@@ -134,8 +138,8 @@ class _AuthCardState extends State<AuthCard> {
     });
   }
 
+//pozwala na zmiane ekranow z logowania na rejestracje
   void _switchAuthMode() {
-    //pozwala na zmiane ekranow z logowania na rejestracje
     if (_authMode == AuthMode.Login) {
       setState(() {
         _authMode = AuthMode.Signup;
@@ -161,7 +165,7 @@ class _AuthCardState extends State<AuthCard> {
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
         width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -185,7 +189,7 @@ class _AuthCardState extends State<AuthCard> {
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
-                      return 'Password is too short! (should be at least 5 chars)';
+                      return 'Password is too short - should be at least 5 chars!';
                     }
                   },
                   onSaved: (value) {
@@ -216,7 +220,7 @@ class _AuthCardState extends State<AuthCard> {
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.0, vertical: 7.0),
