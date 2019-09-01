@@ -11,6 +11,7 @@ import './screens/adoptions_screen.dart';
 import './screens/user_pets_screen.dart';
 import './screens/edit_pet_screen.dart';
 import './screens/auth_screen.dart';
+import './providers/auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider.value(
           value: Pets(),
         ),
