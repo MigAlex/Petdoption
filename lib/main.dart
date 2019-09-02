@@ -23,8 +23,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: Pets(),
+        ChangeNotifierProxyProvider<Auth, Pets>(
+          builder: (ctx, auth, previousPets) => Pets(
+            auth.token,
+            previousPets == null ? [] : previousPets.items,
+          ),
         ),
         ChangeNotifierProvider.value(
           value: AdoptionCart(),

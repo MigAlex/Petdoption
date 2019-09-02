@@ -36,6 +36,9 @@ class Pets with ChangeNotifier {
     //     'https://media.istockphoto.com/photos/siberien-husky-dog-in-studio-picture-id516205222?k=6&m=516205222&s=612x612&w=0&h=F7W4GpEYZa0yQTi0u2scDKv6qakA0NbY3ZvMoqYIGAM=',
     // ),
   ];
+  final String authToken;
+
+  Pets(this.authToken, this._items);
 
   List<Pet> get items{
     return [..._items];
@@ -49,7 +52,7 @@ class Pets with ChangeNotifier {
     return _items.firstWhere((prodItem) => prodItem.id == id);
   }
   Future<void> fetchAndSetPets() async{
-    const url ='https://petdoption-app.firebaseio.com/pets.json';
+    final url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken';
     try{
       final response = await http.get(url);
       final unpackedData = json.decode(response.body) as Map<String, dynamic>;
