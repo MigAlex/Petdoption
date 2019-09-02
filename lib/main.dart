@@ -33,21 +33,23 @@ class MyApp extends StatelessWidget {
           value: Adoptions(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Pet Ads Board',
-        theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.lightGreen,
-          fontFamily: 'Lato',
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          title: 'Pet Ads Board',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.lightGreen,
+            fontFamily: 'Lato',
+          ),
+          home: auth.isAuth ? PetsOverviewScreen() : AuthScreen(),
+          routes: {
+            PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
+            AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
+            AdoptionsScreen.routeName: (ctx) => AdoptionsScreen(),
+            UserPetsScreen.rounteName: (ctx) => UserPetsScreen(),
+            EditPetScreen.routeName: (ctx) => EditPetScreen(),
+          },
         ),
-        home: AuthScreen(),
-        routes: {
-          PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
-          AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
-          AdoptionsScreen.routeName: (ctx) => AdoptionsScreen(),
-          UserPetsScreen.rounteName: (ctx) => UserPetsScreen(),
-          EditPetScreen.routeName: (ctx) => EditPetScreen(),
-        },
       ),
     );
   }
