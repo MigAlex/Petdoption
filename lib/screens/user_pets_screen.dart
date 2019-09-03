@@ -16,7 +16,7 @@ class UserPetsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final petsData = Provider.of<Pets>(context);
-    print('rebuilding user pet annoucements...')
+    print('rebuilding user pet annoucements...');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Pets Annoucements'),
