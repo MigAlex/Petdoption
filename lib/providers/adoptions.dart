@@ -21,13 +21,16 @@ class AdoptionItem {
 
 class Adoptions with ChangeNotifier {
   List<AdoptionItem> _adoptions = [];
+  final String authToken;
+
+  Adoptions(this.authToken, this._adoptions);
 
   List<AdoptionItem> get adoptions {
     return [..._adoptions];
   }
 
   Future<void> fetchAndSetAdoptions() async {
-    const url ='https://petdoption-app.firebaseio.com/adoptions.json';
+    final url ='https://petdoption-app.firebaseio.com/adoptions.json?auth=$authToken';
     final response = await http.get(url);
     final List<AdoptionItem> loadedAdoptions = [];
     final unpackedData = json.decode(response.body) as Map<String, dynamic>;
@@ -57,7 +60,7 @@ class Adoptions with ChangeNotifier {
   }
 
   Future<void> addAdoption(List<AdoptionCartItem> cartPets, double total) async {
-    const url ='https://petdoption-app.firebaseio.com/adoptions.json';
+    final url ='https://petdoption-app.firebaseio.com/adoptions.json?auth=$authToken';
     final timing = DateTime.now();
     final response = await http.post(
       url,

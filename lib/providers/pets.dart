@@ -79,7 +79,7 @@ class Pets with ChangeNotifier {
   }
 
   Future<void> addPet(Pet pet) async {
-    const url ='https://petdoption-app.firebaseio.com/pets.json';
+    final url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken';
     try{
        final response = await http.post(                  //wysyla post request dla url z powyzej
       url,
@@ -113,7 +113,7 @@ class Pets with ChangeNotifier {
   Future <void> updatePet(String id, Pet newPet) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url ='https://petdoption-app.firebaseio.com/pets/$id.json';   
+      final url ='https://petdoption-app.firebaseio.com/pets/$id.json?auth=$authToken';   
      await http.patch(url,
      body: json.encode({
        'name': newPet.name,
@@ -131,7 +131,7 @@ class Pets with ChangeNotifier {
   }
 
   Future <void> deletePet(String id) async {
-    final url ='https://petdoption-app.firebaseio.com/pets/$id.json';
+    final url ='https://petdoption-app.firebaseio.com/pets/$id.json?auth=$authToken';
     final existingPetIndex = _items.indexWhere((pt) => pt.id == id);
     var existingPet = _items[existingPetIndex];
     _items.removeAt(existingPetIndex);                  //kasuje z listy, ale nie z pamieci
