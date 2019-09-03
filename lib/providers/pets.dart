@@ -52,8 +52,9 @@ class Pets with ChangeNotifier {
   Pet findById(String id){
     return _items.firstWhere((prodItem) => prodItem.id == id);
   }
-  Future<void> fetchAndSetPets() async{
-    var url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken';
+  Future<void> fetchAndSetPets([bool filterByUser = false]) async{
+    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    var url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken&$filterString';
     try{
       final response = await http.get(url);
       final unpackedData = json.decode(response.body) as Map<String, dynamic>;
@@ -93,6 +94,7 @@ class Pets with ChangeNotifier {
         'price': pet.price,
         'email': pet.email,
         'imageUrl': pet.imageUrl,
+        'creatorId': userId,
       }),
     );
       final newPet = Pet(
