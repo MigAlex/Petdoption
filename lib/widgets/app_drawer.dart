@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/adoptions_screen.dart';
 import '../screens/user_pets_screen.dart';
+import '../providers/auth.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -34,9 +36,18 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Manage Your Pet annoucements'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(UserPetsScreen.rounteName);
+              Navigator.of(context).pushReplacementNamed(UserPetsScreen.routeName);
             },
-          )
+          ),
+          Divider(),          //przejscie do ekranu dodawania/edycji Twoich ogloszen
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text('Log out'),
+            onTap: () {
+              Navigator.of(context).pop();      //do zamkniecia panelu bocznego
+              Provider.of<Auth>(context, listen: false).logout();
+            },
+          ),
         ],
       ),
       

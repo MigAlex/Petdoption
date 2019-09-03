@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
             AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),
             AdoptionsScreen.routeName: (ctx) => AdoptionsScreen(),
-            UserPetsScreen.rounteName: (ctx) => UserPetsScreen(),
+            UserPetsScreen.routeName: (ctx) => UserPetsScreen(),
             EditPetScreen.routeName: (ctx) => EditPetScreen(),
           },
         ),

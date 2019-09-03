@@ -7,7 +7,7 @@ import '../widgets/app_drawer.dart';
 import './edit_pet_screen.dart';
 
 class UserPetsScreen extends StatelessWidget {
-  static const rounteName = '/user-pets';
+  static const routeName = '/user-pets';
 
   Future<void> _refreshPets(BuildContext context) async {
     await Provider.of<Pets>(context, listen: false).fetchAndSetPets(true);
