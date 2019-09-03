@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Pets>(
           builder: (ctx, auth, previousPets) => Pets(
             auth.token,
+            auth.userId,
             previousPets == null ? [] : previousPets.items,
           ),
         ),

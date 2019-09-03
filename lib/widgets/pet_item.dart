@@ -31,14 +31,17 @@ class PetItem extends StatelessWidget {
           backgroundColor: Colors.black87,
           leading: Consumer<Pet>(
             builder: (ctx, product, child) => IconButton(
-                  icon: Icon(
-                    product.isFavorite ? Icons.favorite : Icons.favorite_border,
-                  ),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () {
-                    product.toggleFavoriteStatus(authData.token);
-                  },
-                ),
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                product.toggleFavoriteStatus(
+                  authData.token,
+                  authData.userId,
+                );
+              },
+            ),
           ),
           title: Text(
             pet.name,
@@ -59,12 +62,11 @@ class PetItem extends StatelessWidget {
                   duration: Duration(seconds: 3),
                   action: SnackBarAction(
                     label: 'UNDO',
-                    onPressed: (){
+                    onPressed: () {
                       adoptionCart.removeSingleItem(pet.id);
                     },
                   ),
                 ),
-
               );
             },
             color: Theme.of(context).accentColor,

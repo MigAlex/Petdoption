@@ -37,8 +37,9 @@ class Pets with ChangeNotifier {
     // ),
   ];
   final String authToken;
+  final String userId;
 
-  Pets(this.authToken, this._items);
+  Pets(this.authToken, this.userId, this._items);
 
   List<Pet> get items{
     return [..._items];
@@ -52,13 +53,16 @@ class Pets with ChangeNotifier {
     return _items.firstWhere((prodItem) => prodItem.id == id);
   }
   Future<void> fetchAndSetPets() async{
-    final url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken';
+    var url ='https://petdoption-app.firebaseio.com/pets.json?auth=$authToken';
     try{
       final response = await http.get(url);
       final unpackedData = json.decode(response.body) as Map<String, dynamic>;
       if(unpackedData == null){
         return;
-      }      
+      }
+      url ='https://petdoption-app.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url); 
+      final favoriteData = json.decode(favoriteResponse.body);     
       final List<Pet> loadedPets = [];
       unpackedData.forEach((ptId, ptData){        //bedzie sie wykonywala petla forEach dla kazdej danej i Peta
         loadedPets.add(Pet(
@@ -67,7 +71,7 @@ class Pets with ChangeNotifier {
           description: ptData['description'],
           price: ptData['price'],
           email: ptData['email'],
-          isFavorite: ptData['isFavorite'],
+          isFavorite: favoriteData == null ? false : favoriteData[ptId] ?? false,
           imageUrl: ptData['imageUrl'],
         ));
       });
@@ -89,7 +93,6 @@ class Pets with ChangeNotifier {
         'price': pet.price,
         'email': pet.email,
         'imageUrl': pet.imageUrl,
-        'isFavorite': pet.isFavorite,
       }),
     );
       final newPet = Pet(
