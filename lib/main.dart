@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 import './screens/pets_overview_screen.dart';
@@ -49,7 +50,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.lightGreen,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? PetsOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? PetsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
             PetDetailScreen.routeName: (ctx) => PetDetailScreen(),
             AdoptionCartScreen.routeName: (ctx) => AdoptionCartScreen(),

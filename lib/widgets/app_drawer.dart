@@ -45,6 +45,7 @@ class AppDrawer extends StatelessWidget {
             title: Text('Log out'),
             onTap: () {
               Navigator.of(context).pop();      //do zamkniecia panelu bocznego
+              Navigator.of(context).pushReplacementNamed('/');
               Provider.of<Auth>(context, listen: false).logout();
             },
           ),
