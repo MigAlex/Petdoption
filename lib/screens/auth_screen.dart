@@ -261,7 +261,7 @@ class _AuthCardState extends State<AuthCard> {
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
                     onPressed: _submit,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.0, vertical: 7.0),
