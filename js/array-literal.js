@@ -1,0 +1,1 @@
+// Utworzenie tablicy i przypisanie jej wartości.var colors; colors = ['biały', 'czarny', 'inny'];// Wyświetlenie pierwszego elementu tablicy.var el = document.getElementById('colors');el.textContent = colors[0];// Uwaga: textContent nie działa w IE8 i wcześniejszych - wyjaśnienie znajdziesz na WWW.
