@@ -3,13 +3,11 @@ import 'package:flutter/foundation.dart';
 class AdoptionCartItem {
   final String id;
   final String name;
-  final int quantity;
   final double price;
 
   AdoptionCartItem({
     @required this.id,
     @required this.name,
-    @required this.quantity,
     @required this.price,
   });
 }
@@ -28,7 +26,7 @@ class AdoptionCart with ChangeNotifier {
   double get totalAmount {
     var total = 0.0;
     _items.forEach((key, adoptionCartItem) {
-      total += adoptionCartItem.price * adoptionCartItem.quantity;
+      total += adoptionCartItem.price;
     });
     return total;
   }
@@ -45,7 +43,6 @@ class AdoptionCart with ChangeNotifier {
           id: existingCartItem.id,
           name: existingCartItem.name,
           price: existingCartItem.price,
-          quantity: existingCartItem.quantity + 1,
         ),
       );
     } else {
@@ -55,7 +52,6 @@ class AdoptionCart with ChangeNotifier {
           id: DateTime.now().toString(),
           name: name,
           price: price,
-          quantity: 1,
         ),
       );
     }
@@ -71,20 +67,17 @@ class AdoptionCart with ChangeNotifier {
     if (!_items.containsKey(petId)) {
       return;
     }
-    if (_items[petId].quantity > 1) {
+
       _items.update(
           petId,
           (existingAdoptionCartItem) => AdoptionCartItem(
                 id: existingAdoptionCartItem.id,
                 name: existingAdoptionCartItem.name,
                 price: existingAdoptionCartItem.price,
-                quantity: existingAdoptionCartItem.quantity - 1,
               ));
-    } else {
       _items.remove(petId);
     }
     notifyListeners();
-  }
 
   void clear() {
     _items = {};

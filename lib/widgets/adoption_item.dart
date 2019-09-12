@@ -55,7 +55,7 @@ class _AdoptionItemState extends State<AdoptionItem> {
                                 ),
                               ),
                               Text(
-                                '${pt.quantity}x \$${pt.price}',
+                                '\$${pt.price}',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey,

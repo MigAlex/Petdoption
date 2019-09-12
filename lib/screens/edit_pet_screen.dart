@@ -111,7 +111,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
             content: Text('Something went wrong.'),
             actions: <Widget>[
               FlatButton(
-                child: Text('Ok, got it'),
+                child: Text('Ok, got it',),
                 onPressed: () {
                   Navigator.of(ctx).pop();
                 },
@@ -179,7 +179,6 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       initialValue: _initValues['price'],
                       decoration: InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number,
                       focusNode: _priceFocusNode,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)

@@ -59,7 +59,7 @@ class PetDetailScreen extends StatelessWidget {
               width: double.infinity,
               child: Row(
                 children: <Widget>[
-                  _createCircleBadge(Icons.email, Colors.lightGreen),
+                  _createCircleBadge(Icons.email, Colors.purple),
                   Text(
                     loadedPet.email,
                     textAlign: TextAlign.justify,

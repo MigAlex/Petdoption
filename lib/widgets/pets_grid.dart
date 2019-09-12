@@ -14,19 +14,33 @@ class PetsGrid extends StatelessWidget {
     final petsData = Provider.of<Pets>(context);
     final pets = showFavorites ? petsData.favoriteItems : petsData.items;
 
-    return GridView.builder(
-      padding: const EdgeInsets.all(5.0),
-      itemCount: pets.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: pets[i],
-        child: PetItem(
+     var linearGradient = new BoxDecoration(
+      gradient: new LinearGradient(
+        begin: FractionalOffset.centerRight,
+        end: FractionalOffset.bottomLeft,
+        colors: [
+          Colors.pink,
+          Colors.purple,
+        ],
       ),
-      ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.75 / 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+    );
+
+    return Container(
+      decoration: linearGradient,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(5.0),
+        itemCount: pets.length,
+        itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+          value: pets[i],
+          child: PetItem(
+        ),
+        ),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1.75 / 2,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
       ),
     );
   }

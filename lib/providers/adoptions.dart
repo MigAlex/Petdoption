@@ -49,7 +49,6 @@ class Adoptions with ChangeNotifier {
             (item) => AdoptionCartItem(
               id: item['id'],
               price: item['price'],
-              quantity: item['quantity'],
               name: item['name'],
             ),
           ).toList(),
@@ -72,7 +71,6 @@ class Adoptions with ChangeNotifier {
         .map((cp) => {
           'id': cp.id,
           'name': cp.name,
-          'quantity': cp.quantity,
           'price': cp.price,
         }).toList(),
       }),

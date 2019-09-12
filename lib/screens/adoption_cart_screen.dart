@@ -51,7 +51,6 @@ class AdoptionCartScreen extends StatelessWidget {
                 adoptionCart.items.values.toList()[i].id,
                 adoptionCart.items.keys.toList()[i],
                 adoptionCart.items.values.toList()[i].price,
-                adoptionCart.items.values.toList()[i].quantity,
                 adoptionCart.items.values.toList()[i].name,
               ),
             ),
