@@ -16,9 +16,12 @@
 
 ## **Skromny zespół projektowy**
 * Patryk Migielski (KrDZIs3012Io)
+### **Wykorzystana technologia**
+* Framework: *Flutter*
+* Język programowania: *Dart*
 
 ### **Diagram Przypadków użycia**
-![diagram2](https://user-images.githubusercontent.com/43915819/64862585-31482a80-d633-11e9-994f-4372b462d0c0.jpg)
+![diagram2](https://user-images.githubusercontent.com/43915819/64862891-eed31d80-d633-11e9-956e-89808cf0f6cc.jpg)
 ## Screeny poglądowe
 
 ### *Logowanie*
