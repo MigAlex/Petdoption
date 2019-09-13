@@ -18,7 +18,7 @@
 * Patryk Migielski (KrDZIs3012Io)
 
 ### **Diagram Przypadków użycia**
-![diagram](https://user-images.githubusercontent.com/43915819/64827036-1b028600-d5c3-11e9-81cc-7c4557e10e69.jpg)
+![diagram2](https://user-images.githubusercontent.com/43915819/64862585-31482a80-d633-11e9-994f-4372b462d0c0.jpg)
 ## Screeny poglądowe
 
 ### *Logowanie*
