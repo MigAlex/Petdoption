@@ -22,10 +22,6 @@
 * Framework: *Flutter*
 * Język programowania: *Dart*
 
-### **Diagram Przypadków użycia**
-![diagram2](https://user-images.githubusercontent.com/43915819/64862891-eed31d80-d633-11e9-956e-89808cf0f6cc.jpg)
-## Screeny poglądowe
-
 ### *Logowanie*
 ![logowanie](https://user-images.githubusercontent.com/43915819/64826300-8860e780-d5c0-11e9-93f9-4901f255166f.png)
 
